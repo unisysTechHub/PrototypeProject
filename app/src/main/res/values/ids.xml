@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <item name="expandable_list_view" type="id"/>-->
+    <item name="groupviewid" type="id"/>
+    <item name="position_group_view" type="id"/>
+    <item name="arrow_group_view" type="id"/>
+    <item name="child_vid_value" type="id"/>
+    <item name="child_vid" type="id"/>
+</resources>
