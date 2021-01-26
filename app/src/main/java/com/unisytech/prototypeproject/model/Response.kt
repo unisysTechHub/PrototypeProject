@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
  * Created by ramesh on 20/01/21.
  */
 
-
  class EquipmentListModel {
     var equipmentList : List<EquipmentModel> = listOf(EquipmentModel())
 }

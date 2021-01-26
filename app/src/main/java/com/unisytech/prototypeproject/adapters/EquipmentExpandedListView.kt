@@ -91,50 +91,81 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
                  vinTextView.layoutParams = lparams
                 constraintLayout.addView(vinTextView)
 
-
-               //  var vinValueTextView = customTextView(context=constraintLayout.context)
-                  vinTextView.id = R.id.child_vid_value
-               // vinValueTextView.text =   equipmentExpandableList[p0]!![p1]!!.vin
+                var vinValueTextView = customTextView(context=constraintLayout.context)
+                vinValueTextView.id = R.id.child_vid_value
+                vinValueTextView.text =   equipmentExpandableList[p0]!![p1]!!.vin
                 var valuelparams = vinValueTextView.layoutParams as ConstraintLayout.LayoutParams
-                val id  = constraintLayout.findViewById<TextView>(R.id.child_vid).id
-                Log.d("Ramesh",id .toString())
-                 valuelparams.endToStart = id
-//                lparams.topToTop = constraintLayout.top
-//                lparams.bottomToBottom = constraintLayout.bottom
-//                vinTextView.layoutParams = valuelparams
-//
-//                constraintLayout.addView(vinValueTextView)
+                 valuelparams.leftToRight = vinTextView.id
+                valuelparams.topToTop = constraintLayout.top
+                valuelparams.bottomToBottom = constraintLayout.bottom
+                vinValueTextView.layoutParams = valuelparams
+               constraintLayout.addView(vinValueTextView)
 
 
 
             }
             RowType.YEAR.value ->   {
                 var yearTextView = customTextView(context)
+                yearTextView.id = R.id.child_year_id_label
                 yearTextView.text = context.getString(R.string.YEAR)
+                val lparams = yearTextView.layoutParams as ConstraintLayout.LayoutParams
+                lparams.startToStart = constraintLayout.left
+                lparams.topToTop = constraintLayout.top
+                lparams.bottomToBottom = constraintLayout.bottom
+                yearTextView.layoutParams = lparams
                 constraintLayout.addView(yearTextView)
 
                 var yearValueTextView = customTextView(context)
+                yearValueTextView.id = R.id.child_year_id_value
                 yearValueTextView.text =   equipmentExpandableList[p0]!![p1]!!.year.toString()
+                var valuelparams = yearValueTextView.layoutParams as ConstraintLayout.LayoutParams
+                valuelparams.leftToRight = yearTextView.id
+                valuelparams.topToTop = constraintLayout.top
+                valuelparams.bottomToBottom = constraintLayout.bottom
+                yearValueTextView.layoutParams = valuelparams
                 constraintLayout.addView(yearValueTextView)
             }
 
             RowType.Make.value ->   {
                 var makeTextView = customTextView(context)
                 makeTextView.text = context.getString(R.string.MAKE)
+                makeTextView.id = R.id.child_make_label
+                val lparams = makeTextView.layoutParams as ConstraintLayout.LayoutParams
+                lparams.startToStart = constraintLayout.left
+                lparams.topToTop = constraintLayout.top
+                lparams.bottomToBottom = constraintLayout.bottom
+                makeTextView.layoutParams = lparams
                 constraintLayout.addView(makeTextView)
 
                 var makeValueTextView = customTextView(context)
+                makeValueTextView.id = R.id.child_make_value
                 makeValueTextView.text =   equipmentExpandableList[p0]!![p1]!!.make
+                var valuelparams = makeValueTextView.layoutParams as ConstraintLayout.LayoutParams
+                valuelparams.leftToRight = makeTextView.id
+                valuelparams.topToTop = constraintLayout.top
+                valuelparams.bottomToBottom = constraintLayout.bottom
+                makeValueTextView.layoutParams = valuelparams
                 constraintLayout.addView(makeValueTextView)
             }
             RowType.Value.value ->   {
                 var valueTextView = customTextView(context)
-
+                valueTextView.id = R.id.child_eqp_value_label
                 valueTextView.text = context.getString(R.string.VALUE)
+                val lparams = valueTextView.layoutParams as ConstraintLayout.LayoutParams
+                lparams.startToStart = constraintLayout.left
+                lparams.topToTop = constraintLayout.top
+                lparams.bottomToBottom = constraintLayout.bottom
+                valueTextView.layoutParams = lparams
                 constraintLayout.addView(valueTextView)
 
                 var valueValueTextView = customTextView(context)
+                valueValueTextView.id = R.id.child_eqp_value
                 valueValueTextView.text =   equipmentExpandableList[p0]!![p1]!!.value.toString()
+                var valuelparams = valueValueTextView.layoutParams as ConstraintLayout.LayoutParams
+                valuelparams.leftToRight = valueTextView.id
+                valuelparams.topToTop = constraintLayout.top
+                valuelparams.bottomToBottom = constraintLayout.bottom
+                valueValueTextView.layoutParams = valuelparams
                 constraintLayout.addView(valueValueTextView)
             }
             RowType.Length.value ->   {

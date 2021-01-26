@@ -6,4 +6,11 @@
     <item name="arrow_group_view" type="id"/>
     <item name="child_vid_value" type="id"/>
     <item name="child_vid" type="id"/>
+    <item name="child_year_id_label" type="id"/>
+    <item name="child_year_id_value" type="id" />
+    <item name="child_make_label" type="id"/>
+    <item name="child_make_value" type="id"/>
+    <item name="child_eqp_value_label" type="id"/>
+    <item name="child_eqp_value" type="id"/>
+
 </resources>
