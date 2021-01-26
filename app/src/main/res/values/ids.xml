@@ -2,7 +2,6 @@
 <resources>
 <!--    <item name="expandable_list_view" type="id"/>-->
     <item name="groupviewid" type="id"/>
-    <item name="position_group_view" type="id"/>
     <item name="arrow_group_view" type="id"/>
     <item name="child_vid_value" type="id"/>
     <item name="child_vid" type="id"/>
@@ -12,5 +11,11 @@
     <item name="child_make_value" type="id"/>
     <item name="child_eqp_value_label" type="id"/>
     <item name="child_eqp_value" type="id"/>
+    <item name="group_id" type="id"/>
+    <item name="group_make" type="id"/>
+    <item name="group_arrow_view" type="id"/>
+    <item name="group_checkbox" type="id"/>
+    <item name="group_position" type="id"/>
+
 
 </resources>

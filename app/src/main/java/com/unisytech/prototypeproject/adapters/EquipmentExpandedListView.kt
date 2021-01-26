@@ -6,10 +6,7 @@ import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListAdapter
-import android.widget.ExpandableListView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.unisytech.prototypeproject.R
@@ -207,51 +204,75 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
         //var linearLayout = linerLayout(context)
         var constraintLayout = constraintLayout(context)
         val checkbox = checkBox(context);
+        checkbox.isClickable = false
+        var checkboxLayoutparams = checkbox.layoutParams as ConstraintLayout.LayoutParams
+        checkboxLayoutparams.startToStart = constraintLayout.left
+        checkboxLayoutparams.topToTop = constraintLayout.top
+        checkboxLayoutparams.bottomToBottom = constraintLayout.bottom
+        checkbox.isChecked = false
+        constraintLayout.addView(checkbox)
 
-        checkbox.setOnCheckedChangeListener{buttonView,  isChecked ->
+        var idTextView = customTextView(context)
+        idTextView.id = R.id.group_id
+        idTextView.text = equipmentGroup[p0]!!.id.toString()
+        var idTextViewLayoutparams = idTextView.layoutParams as ConstraintLayout.LayoutParams
+        idTextViewLayoutparams.leftToRight = checkbox.id
+        idTextViewLayoutparams.topToTop = constraintLayout.top
+        idTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
+        constraintLayout.addView(idTextView)
+
+        var makeTextView = customTextView(context)
+        makeTextView.text = equipmentGroup[p0]!!.make
+        var makeTextViewLayoutparams = idTextView.layoutParams as ConstraintLayout.LayoutParams
+        makeTextViewLayoutparams.leftToRight = idTextView.id
+        makeTextViewLayoutparams.topToTop = constraintLayout.top
+        makeTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
+        constraintLayout.addView(makeTextView)
+
+
+        var positionTextView = customTextView(context)
+        positionTextView.id = R.id.group_position
+        var posTextViewLayoutparams = idTextView.layoutParams as ConstraintLayout.LayoutParams
+        posTextViewLayoutparams.leftToRight = makeTextView.id
+        posTextViewLayoutparams.topToTop = constraintLayout.top
+        posTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
+        positionTextView.text = p0.toString()
+        positionTextView.visibility = View.INVISIBLE
+         constraintLayout.addView(positionTextView)
+
+        var imageVIew = imageView(context)
+        imageVIew.id = R.id.arrow_group_view
+        var imageViewLayoutparams = imageVIew.layoutParams as ConstraintLayout.LayoutParams
+        imageViewLayoutparams.rightToRight = constraintLayout.right
+        posTextViewLayoutparams.topToTop = constraintLayout.top
+        posTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
+        imageVIew.setOnClickListener{ imageView ->
             run {
-                when (isChecked) {
+                val expandableListView = imageView.parent.parent as ExpandableListView
+                val groupViewLayout = imageVIew.parent as LinearLayout
+                val positionTextView =  groupViewLayout.findViewById<TextView>(R.id.group_position)
+                val position = positionTextView.text.toString().toInt()
+                var checkbox = groupViewLayout.findViewById<CheckBox>(R.id.group_checkbox)
+                when (expandableListView.isGroupExpanded(position)) {
                     true -> {
-                        val expandableListView = buttonView.parent.parent as ExpandableListView
-                        val groupViewLayout = buttonView.parent as LinearLayout
-                        val positionTextView =  groupViewLayout.findViewById<TextView>(R.id.position_group_view)
-                        val position = positionTextView.text.toString().toInt()
                         Log.d("@RameshT", position.toString())
-                        expandableListView.expandGroup(position)
-
+                        expandableListView.collapseGroup(position)
+                        checkbox.isChecked = false
+                        imageView.setBackgroundResource(R.drawable.ic_arrow_right)
 
                     }
                     false -> {
-                        val expandableListView = buttonView.parent.parent as ExpandableListView
-                        val groupViewLayout = buttonView.parent as LinearLayout
-                        val positionTextView =  groupViewLayout.findViewById<TextView>(R.id.position_group_view)
-                        val position = positionTextView.text.toString().toInt()
+
                         Log.d("@RameshT", position.toString())
-                        expandableListView.collapseGroup(position)
+                        expandableListView.expandGroup(position)
+                        checkbox.isChecked = true
+                        imageView.setBackgroundResource(R.drawable.ic_arrow_down)
+
                     }
                 }
 
             }
         }
-
-        constraintLayout.addView(checkbox,0)
-        var idTextView = customTextView(context)
-        idTextView.text = equipmentGroup[p0]!!.id.toString()
-        constraintLayout.addView(idTextView,1)
-
-        var makeTextView = customTextView(context)
-        makeTextView.text = equipmentGroup[p0]!!.make
-        constraintLayout.addView(makeTextView,2)
-
-        var positionTextView = customTextView(context)
-        positionTextView.text = p0.toString()
-        positionTextView.visibility = View.INVISIBLE
-        positionTextView.id = R.id.position_group_view
-         constraintLayout.addView(positionTextView,3)
-
-        var imageVIew = imageView(context)
-        imageVIew.id = R.id.arrow_group_view
-
         constraintLayout.addView(imageVIew)
 
 
