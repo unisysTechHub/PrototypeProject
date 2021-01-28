@@ -3,7 +3,7 @@
     <string name="VIN">VIN</string>
     <string name="YEAR">Year</string>
     <string name="MAKE">Make</string>
-    <string name="VALUE">Make</string>
+    <string name="VALUE">Value</string>
     <string name="Length">Length</string>
     <string name="ft">ft</string>
 </resources>

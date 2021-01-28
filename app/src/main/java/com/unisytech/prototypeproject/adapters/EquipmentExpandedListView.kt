@@ -2,6 +2,7 @@ package com.unisytech.prototypeproject.adapters
 
 import android.content.Context
 import android.database.DataSetObserver
+import android.graphics.Typeface
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -74,13 +75,14 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
 
     override fun getChildView(p0: Int, p1: Int, p2: Boolean, p3: View?, p4: ViewGroup?): View {
         var constraintLayout = constraintLayout(context)
-
+        constraintLayout.setPadding(84,4,4,4)
         when (p1)
         {
             RowType.VID.value ->   {
                 var vinTextView = customTextView(context)
                 vinTextView.id = R.id.child_vid
                 vinTextView.text = context.getString(R.string.VIN)
+                vinTextView.typeface = Typeface.DEFAULT
                 val lparams = vinTextView.layoutParams as ConstraintLayout.LayoutParams
                 lparams.startToStart = constraintLayout.left
                 lparams.topToTop = constraintLayout.top
@@ -105,6 +107,7 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
                 var yearTextView = customTextView(context)
                 yearTextView.id = R.id.child_year_id_label
                 yearTextView.text = context.getString(R.string.YEAR)
+                yearTextView.typeface = Typeface.DEFAULT
                 val lparams = yearTextView.layoutParams as ConstraintLayout.LayoutParams
                 lparams.startToStart = constraintLayout.left
                 lparams.topToTop = constraintLayout.top
@@ -127,6 +130,7 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
                 var makeTextView = customTextView(context)
                 makeTextView.text = context.getString(R.string.MAKE)
                 makeTextView.id = R.id.child_make_label
+                makeTextView.typeface = Typeface.DEFAULT
                 val lparams = makeTextView.layoutParams as ConstraintLayout.LayoutParams
                 lparams.startToStart = constraintLayout.left
                 lparams.topToTop = constraintLayout.top
@@ -148,6 +152,7 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
                 var valueTextView = customTextView(context)
                 valueTextView.id = R.id.child_eqp_value_label
                 valueTextView.text = context.getString(R.string.VALUE)
+                valueTextView.typeface = Typeface.DEFAULT
                 val lparams = valueTextView.layoutParams as ConstraintLayout.LayoutParams
                 lparams.startToStart = constraintLayout.left
                 lparams.topToTop = constraintLayout.top
@@ -167,13 +172,26 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
             }
             RowType.Length.value ->   {
                 var lengthTextView = customTextView(context)
-
+                lengthTextView.id = R.id.child_length_label
                 lengthTextView.text = context.getString(R.string.Length)
+                lengthTextView.typeface = Typeface.DEFAULT
+                val lparams =lengthTextView.layoutParams as ConstraintLayout.LayoutParams
+                lparams.startToStart = constraintLayout.left
+                lparams.topToTop = constraintLayout.top
+                lparams.bottomToBottom = constraintLayout.bottom
+                lengthTextView.layoutParams = lparams
                 constraintLayout.addView(lengthTextView)
 
                 var lengthValueTextView = customTextView(context)
+                lengthTextView.id = R.id.child_length
+
                 lengthValueTextView.text =
                     equipmentExpandableList[p0]!![p1]!!.length.toString() +  context.getString(R.string.ft)
+                var valuelparams = lengthValueTextView.layoutParams as ConstraintLayout.LayoutParams
+                valuelparams.leftToRight = lengthTextView.id
+                valuelparams.topToTop = constraintLayout.top
+                valuelparams.bottomToBottom = constraintLayout.bottom
+               lengthValueTextView.layoutParams = valuelparams
                 constraintLayout.addView(lengthValueTextView)
             }
         }
@@ -201,15 +219,18 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getGroupView(p0: Int, p1: Boolean, p2: View?, p3: ViewGroup?): View {
+        Log.d("@Ramesh", "groupview")
         //var linearLayout = linerLayout(context)
+        var isExpanded = p1
         var constraintLayout = constraintLayout(context)
         val checkbox = checkBox(context);
+        checkbox.id = R.id.group_checkbox
         checkbox.isClickable = false
+        checkbox.isChecked = isExpanded
         var checkboxLayoutparams = checkbox.layoutParams as ConstraintLayout.LayoutParams
         checkboxLayoutparams.startToStart = constraintLayout.left
         checkboxLayoutparams.topToTop = constraintLayout.top
         checkboxLayoutparams.bottomToBottom = constraintLayout.bottom
-        checkbox.isChecked = false
         constraintLayout.addView(checkbox)
 
         var idTextView = customTextView(context)
@@ -222,57 +243,25 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
         constraintLayout.addView(idTextView)
 
         var makeTextView = customTextView(context)
+        makeTextView.id = R.id.group_make
         makeTextView.text = equipmentGroup[p0]!!.make
-        var makeTextViewLayoutparams = idTextView.layoutParams as ConstraintLayout.LayoutParams
+        var makeTextViewLayoutparams = makeTextView.layoutParams as ConstraintLayout.LayoutParams
         makeTextViewLayoutparams.leftToRight = idTextView.id
         makeTextViewLayoutparams.topToTop = constraintLayout.top
         makeTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
         constraintLayout.addView(makeTextView)
 
-
-        var positionTextView = customTextView(context)
-        positionTextView.id = R.id.group_position
-        var posTextViewLayoutparams = idTextView.layoutParams as ConstraintLayout.LayoutParams
-        posTextViewLayoutparams.leftToRight = makeTextView.id
-        posTextViewLayoutparams.topToTop = constraintLayout.top
-        posTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
-        positionTextView.text = p0.toString()
-        positionTextView.visibility = View.INVISIBLE
-         constraintLayout.addView(positionTextView)
-
         var imageVIew = imageView(context)
-        imageVIew.id = R.id.arrow_group_view
+        imageVIew.id = R.id.group_arrow_view
+        when (isExpanded) {
+            true -> imageVIew.setBackgroundResource(R.drawable.ic_arrow_down)
+            false -> imageVIew.setBackgroundResource(R.drawable.ic_arrow_right)
+        }
         var imageViewLayoutparams = imageVIew.layoutParams as ConstraintLayout.LayoutParams
         imageViewLayoutparams.rightToRight = constraintLayout.right
-        posTextViewLayoutparams.topToTop = constraintLayout.top
-        posTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
-        imageVIew.setOnClickListener{ imageView ->
-            run {
-                val expandableListView = imageView.parent.parent as ExpandableListView
-                val groupViewLayout = imageVIew.parent as LinearLayout
-                val positionTextView =  groupViewLayout.findViewById<TextView>(R.id.group_position)
-                val position = positionTextView.text.toString().toInt()
-                var checkbox = groupViewLayout.findViewById<CheckBox>(R.id.group_checkbox)
-                when (expandableListView.isGroupExpanded(position)) {
-                    true -> {
-                        Log.d("@RameshT", position.toString())
-                        expandableListView.collapseGroup(position)
-                        checkbox.isChecked = false
-                        imageView.setBackgroundResource(R.drawable.ic_arrow_right)
+        imageViewLayoutparams.topToTop = constraintLayout.top
+        imageViewLayoutparams.bottomToBottom = constraintLayout.bottom
 
-                    }
-                    false -> {
-
-                        Log.d("@RameshT", position.toString())
-                        expandableListView.expandGroup(position)
-                        checkbox.isChecked = true
-                        imageView.setBackgroundResource(R.drawable.ic_arrow_down)
-
-                    }
-                }
-
-            }
-        }
         constraintLayout.addView(imageVIew)
 
 

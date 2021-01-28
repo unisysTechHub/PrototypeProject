@@ -11,6 +11,8 @@
     <item name="child_make_value" type="id"/>
     <item name="child_eqp_value_label" type="id"/>
     <item name="child_eqp_value" type="id"/>
+    <item name="child_length_label" type="id"/>
+    <item name="child_length" type="id"/>
     <item name="group_id" type="id"/>
     <item name="group_make" type="id"/>
     <item name="group_arrow_view" type="id"/>

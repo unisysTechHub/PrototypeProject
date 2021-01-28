@@ -3,7 +3,11 @@ package com.unisytech.prototypeproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.CheckBox
 import android.widget.ExpandableListView
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.unisytech.prototypeproject.adapters.EquipmentExpandedListViewAdapter
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         expandableListView = findViewById<ExpandableListView>(R.id.expandable_list_view)
-
+        expandedListViewGroupListener()
         Log.d("@Ramesh ", "oncreate")
         getReferenceToEquipmentListViewModel()
         addObserverToEquipmentListLiveData()
@@ -49,6 +53,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun expandedListViewGroupListener() {
+         expandableListView.setOnGroupClickListener { expandableListView, view, i, l ->
+             run {
+                 Log.d("@Ramesh","expandableList group ligist")
+
+                 val checkbox = view.findViewById<CheckBox>(R.id.group_checkbox)
+
+                 val imageView = view.findViewById<ImageView>(R.id.group_arrow_view)
+                 when (checkbox.isChecked) {
+                     false -> {
+                         expandableListView.expandGroup(i)
+
+
+                     }
+                     true -> {
+                         expandableListView.collapseGroup(i)
+
+
+                     }
+                 }
+
+             }
+
+
+         }
+
+    }
 }
 
 
