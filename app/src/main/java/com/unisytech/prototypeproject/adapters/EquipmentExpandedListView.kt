@@ -4,7 +4,9 @@ import android.content.Context
 import android.database.DataSetObserver
 import android.graphics.Typeface
 import android.os.Build
+import android.text.Layout
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -82,6 +84,7 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
                 var vinTextView = customTextView(context)
                 vinTextView.id = R.id.child_vid
                 vinTextView.text = context.getString(R.string.VIN)
+                vinTextView.layout.alignment = Layout.Alignment.ALIGN_CENTER
                 vinTextView.typeface = Typeface.DEFAULT
                 val lparams = vinTextView.layoutParams as ConstraintLayout.LayoutParams
                 lparams.startToStart = constraintLayout.left
@@ -217,58 +220,71 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
 
     }
 
+    @Suppress("UnnecessaryVariable")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getGroupView(p0: Int, p1: Boolean, p2: View?, p3: ViewGroup?): View {
         Log.d("@Ramesh", "groupview")
         //var linearLayout = linerLayout(context)
-        var isExpanded = p1
-        var constraintLayout = constraintLayout(context)
-        val checkbox = checkBox(context);
-        checkbox.id = R.id.group_checkbox
-        checkbox.isClickable = false
-        checkbox.isChecked = isExpanded
-        var checkboxLayoutparams = checkbox.layoutParams as ConstraintLayout.LayoutParams
-        checkboxLayoutparams.startToStart = constraintLayout.left
-        checkboxLayoutparams.topToTop = constraintLayout.top
-        checkboxLayoutparams.bottomToBottom = constraintLayout.bottom
-        constraintLayout.addView(checkbox)
+        val isExpanded = p1
+        p2?.let {
 
-        var idTextView = customTextView(context)
-        idTextView.id = R.id.group_id
-        idTextView.text = equipmentGroup[p0]!!.id.toString()
-        var idTextViewLayoutparams = idTextView.layoutParams as ConstraintLayout.LayoutParams
-        idTextViewLayoutparams.leftToRight = checkbox.id
-        idTextViewLayoutparams.topToTop = constraintLayout.top
-        idTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
-        constraintLayout.addView(idTextView)
+            it.findViewById<CheckBox>(R.id.group_checkbox).isChecked = isExpanded
+            val imageView = it.findViewById<ImageView>(R.id.group_arrow_view)
+            when (isExpanded) {
+                true -> imageView.setBackgroundResource(R.drawable.ic_arrow_down)
+                false -> imageView.setBackgroundResource(R.drawable.ic_arrow_right)
+            }
 
-        var makeTextView = customTextView(context)
-        makeTextView.id = R.id.group_make
-        makeTextView.text = equipmentGroup[p0]!!.make
-        var makeTextViewLayoutparams = makeTextView.layoutParams as ConstraintLayout.LayoutParams
-        makeTextViewLayoutparams.leftToRight = idTextView.id
-        makeTextViewLayoutparams.topToTop = constraintLayout.top
-        makeTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
-        constraintLayout.addView(makeTextView)
+            return p2 } ?: run {
+            var constraintLayout = constraintLayout(context)
+            val checkbox = checkBox(context);
+            checkbox.id = R.id.group_checkbox
+            checkbox.isClickable = false
+            checkbox.isChecked = p1
+            var checkboxLayoutparams = checkbox.layoutParams as ConstraintLayout.LayoutParams
+            checkboxLayoutparams.startToStart = constraintLayout.left
+            checkboxLayoutparams.topToTop = constraintLayout.top
+            checkboxLayoutparams.bottomToBottom = constraintLayout.bottom
+            constraintLayout.addView(checkbox)
 
-        var imageVIew = imageView(context)
-        imageVIew.id = R.id.group_arrow_view
-        when (isExpanded) {
-            true -> imageVIew.setBackgroundResource(R.drawable.ic_arrow_down)
-            false -> imageVIew.setBackgroundResource(R.drawable.ic_arrow_right)
+            var idTextView = customTextView(context)
+            idTextView.id = R.id.group_id
+            idTextView.text = equipmentGroup[p0]!!.id.toString()
+            var idTextViewLayoutparams = idTextView.layoutParams as ConstraintLayout.LayoutParams
+            idTextViewLayoutparams.leftToRight = checkbox.id
+            idTextViewLayoutparams.topToTop = constraintLayout.top
+            idTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
+            constraintLayout.addView(idTextView)
+
+            var makeTextView = customTextView(context)
+            makeTextView.id = R.id.group_make
+            makeTextView.text = equipmentGroup[p0]!!.make
+            var makeTextViewLayoutparams = makeTextView.layoutParams as ConstraintLayout.LayoutParams
+            makeTextViewLayoutparams.leftToRight = idTextView.id
+            makeTextViewLayoutparams.topToTop = constraintLayout.top
+            makeTextViewLayoutparams.bottomToBottom = constraintLayout.bottom
+            constraintLayout.addView(makeTextView)
+
+            var imageVIew = imageView(context)
+            imageVIew.id = R.id.group_arrow_view
+            when (isExpanded) {
+                true -> imageVIew.setBackgroundResource(R.drawable.ic_arrow_down)
+                false -> imageVIew.setBackgroundResource(R.drawable.ic_arrow_right)
+            }
+            var imageViewLayoutparams = imageVIew.layoutParams as ConstraintLayout.LayoutParams
+            imageViewLayoutparams.rightToRight = constraintLayout.right
+            imageViewLayoutparams.topToTop = constraintLayout.top
+            imageViewLayoutparams.bottomToBottom = constraintLayout.bottom
+
+            constraintLayout.addView(imageVIew)
+            return constraintLayout
+
         }
-        var imageViewLayoutparams = imageVIew.layoutParams as ConstraintLayout.LayoutParams
-        imageViewLayoutparams.rightToRight = constraintLayout.right
-        imageViewLayoutparams.topToTop = constraintLayout.top
-        imageViewLayoutparams.bottomToBottom = constraintLayout.bottom
-
-        constraintLayout.addView(imageVIew)
 
 
 
 
 
-        return constraintLayout
     }
 
     override fun unregisterDataSetObserver(p0: DataSetObserver?) {
