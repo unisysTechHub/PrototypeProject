@@ -84,7 +84,6 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
                 var vinTextView = customTextView(context)
                 vinTextView.id = R.id.child_vid
                 vinTextView.text = context.getString(R.string.VIN)
-                vinTextView.layout.alignment = Layout.Alignment.ALIGN_CENTER
                 vinTextView.typeface = Typeface.DEFAULT
                 val lparams = vinTextView.layoutParams as ConstraintLayout.LayoutParams
                 lparams.startToStart = constraintLayout.left
