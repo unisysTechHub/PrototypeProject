@@ -225,16 +225,7 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
         Log.d("@Ramesh", "groupview")
         //var linearLayout = linerLayout(context)
         val isExpanded = p1
-        p2?.let {
 
-            it.findViewById<CheckBox>(R.id.group_checkbox).isChecked = isExpanded
-            val imageView = it.findViewById<ImageView>(R.id.group_arrow_view)
-            when (isExpanded) {
-                true -> imageView.setBackgroundResource(R.drawable.ic_arrow_down)
-                false -> imageView.setBackgroundResource(R.drawable.ic_arrow_right)
-            }
-
-            return p2 } ?: run {
             var constraintLayout = constraintLayout(context)
             val checkbox = checkBox(context);
             checkbox.id = R.id.group_checkbox
@@ -278,7 +269,7 @@ class EquipmentExpandedListViewAdapter  (private  val context : Context, private
             constraintLayout.addView(imageVIew)
             return constraintLayout
 
-        }
+
 
 
 

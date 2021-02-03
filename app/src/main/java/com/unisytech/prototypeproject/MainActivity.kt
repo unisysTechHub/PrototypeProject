@@ -56,12 +56,8 @@ class MainActivity : AppCompatActivity() {
     fun expandedListViewGroupListener() {
          expandableListView.setOnGroupClickListener { expandableListView, view, i, l ->
              run {
-                 Log.d("@Ramesh","expandableList group ligist")
 
-                 val checkbox = view.findViewById<CheckBox>(R.id.group_checkbox)
-
-                 val imageView = view.findViewById<ImageView>(R.id.group_arrow_view)
-                 when (checkbox.isChecked) {
+                 when (expandableListView.isGroupExpanded(i)) {
                      false -> {
                          expandableListView.expandGroup(i)
 
